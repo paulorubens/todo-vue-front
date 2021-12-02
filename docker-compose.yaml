@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    entrypoint: ./.docker/entrypoint.sh
+    container_name: todo-vue-front
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/home/node/app

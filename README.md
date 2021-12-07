@@ -1,24 +1,14 @@
-# todo-vue-front
+### Initialize docker container
 
-## Project setup
-```
-npm install
-```
+This step will initialize container and run NodeJS with command<br>
+``npm run start:dev``
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+```bash
+$ docker-compose up
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Access
 
-### Lints and fixes files
 ```
-npm run lint
+http://localhost:8080
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

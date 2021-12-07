@@ -1,7 +1,7 @@
 ### Initialize docker container
 
 This step will initialize container and run NodeJS with command<br>
-``npm run start:dev``
+``npm run serve``
 
 ```bash
 $ docker-compose up

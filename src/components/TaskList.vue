@@ -30,6 +30,7 @@
         v-on:editTask="editTask"
         v-on:updateTask="updateTask"
         v-on:deleteTask="deleteTask"
+        v-on:cancelarEdicaoTask="cancelarEdicaoTask"
       ></TaskListItems>
     </div>
   </div>
@@ -39,10 +40,16 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import TaskListItems from "./TaskListItems.vue";
+import TaskService from '../services/TaskService';
 
 export default {
   name: "TaskList",
-  props: ["title"],
+  props: {
+    title: {
+      type: String,
+      default: 'Tarefas'
+    }
+  },
   components: {
     TaskListItems,
   },
@@ -50,6 +57,7 @@ export default {
     return {
       maxId: 3,
       task: "",
+      taskOld: {},
       taskList: [
         {
           id: 1,
@@ -79,6 +87,12 @@ export default {
     };
   },
   methods: {
+    async getTasks() {
+      const lista = await TaskService.getTasks();
+      if (lista) {
+        this.taskList = lista;
+      }
+    },
     addTask(task) {
       if (!task) {
         return;
@@ -102,9 +116,15 @@ export default {
       if (task.completed) {
         return;
       }
+      this.taskOld = Object.assign(this.taskOld, task);
       task.edit = true;
     },
     updateTask(task) {
+      task.edit = false;
+    },
+    cancelarEdicaoTask(task) {
+      console.log('cancel');
+      task = Object.assign(task, this.taskOld);
       task.edit = false;
     },
     deleteTask(task) {
@@ -127,6 +147,9 @@ export default {
       });
       return sorted;
     },
+  },
+  created() {
+    this.getTasks();
   },
 };
 </script>

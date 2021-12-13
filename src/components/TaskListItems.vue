@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="input-group" v-if="task.edit">
-          <input class="form-control" type="text" v-on:keyup.enter="updateTask(task)" v-on:keyup.esc="updateTask(task)" v-model="task.description"/>
+          <input class="form-control" type="text" v-on:keyup.enter="updateTask(task)" v-on:keyup.esc="cancelarEdicaoTask(task)" v-model="task.description"/>
           <div class="input-group-append">
             <button class="btn btn-info" v-on:click="updateTask(task)"><span class="fa fa-check"></span></button>
           </div>
@@ -41,6 +41,9 @@ export default {
     },
     deleteTask(task) {
       this.$emit("deleteTask", task);
+    },
+    cancelarEdicaoTask(task) {
+      this.$emit("cancelarEdicaoTask", task);
     }
   }
 };

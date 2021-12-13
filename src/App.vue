@@ -5,7 +5,7 @@
     </div>
     <div>
       <div id="main" class="container" style="width: 50rem">
-        <TaskList title="Tarefas"></TaskList>
+        <router-view/>
       </div>
     </div>
   </div>
@@ -14,13 +14,9 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
-import TaskList from "./components/TaskList.vue";
 
 export default {
-  name: "App",
-  components: {
-    TaskList,
-  }
+  name: "App"
 };
 </script>
 

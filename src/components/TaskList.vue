@@ -1,12 +1,19 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h5>
-        {{ title }}
-        <span class="badge bg-info">
-          {{ taskList.filter((task) => task.completed === false).length }}
-        </span>
-      </h5>
+      <div class="input-group">
+        <h5 class="col-md">
+          {{ title }}
+          <span class="badge bg-info">
+            {{ taskList.filter((task) => task.completed === false).length }}
+          </span>
+        </h5>
+        <div class="col-md text-end">
+          <button class="btn btn-info" v-on:click="getTasks()">
+            <span class="fa fa-refresh"></span>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="input-group">
@@ -36,126 +43,4 @@
   </div>
 </template>
 
-<script>
-import "bootstrap/dist/css/bootstrap.css";
-import "font-awesome/css/font-awesome.css";
-import TaskListItems from "./TaskListItems.vue";
-import TaskService from '../services/TaskService';
-
-export default {
-  name: "TaskList",
-  props: {
-    title: {
-      type: String,
-      default: 'Tarefas'
-    }
-  },
-  components: {
-    TaskListItems,
-  },
-  data() {
-    return {
-      maxId: 3,
-      task: "",
-      taskOld: {},
-      taskList: [
-        {
-          id: 1,
-          description: "tarefa 1",
-          dateCreated: "20/11/2020",
-          dateCompleted: "20/11/2020",
-          completed: true,
-          edit: false,
-        },
-        {
-          id: 2,
-          description: "tarefa 2",
-          dateCreated: "20/11/2020",
-          dateCompleted: "",
-          completed: false,
-          edit: false,
-        },
-        {
-          id: 3,
-          description: "tarefa 3",
-          dateCreated: "20/11/2020",
-          dateCompleted: "",
-          completed: false,
-          edit: false,
-        },
-      ],
-    };
-  },
-  methods: {
-    async getTasks() {
-      const lista = await TaskService.getTasks();
-      if (lista) {
-        this.taskList = lista;
-      }
-    },
-    addTask(task) {
-      if (!task) {
-        return;
-      }
-      this.maxId++;
-      var t1 = {
-        id: this.maxId,
-        description: task,
-        dateCreated: new Date().toLocaleDateString(),
-        dateCompleted: "",
-        completed: false,
-      };
-      this.taskList.unshift(t1);
-      this.task = "";
-    },
-    completeTask(task) {
-      task.dateCompleted = new Date().toLocaleDateString();
-      task.completed = true;
-    },
-    editTask(task) {
-      if (task.completed) {
-        return;
-      }
-      this.taskOld = Object.assign(this.taskOld, task);
-      task.edit = true;
-    },
-    updateTask(task) {
-      task.edit = false;
-    },
-    cancelarEdicaoTask(task) {
-      console.log('cancel');
-      task = Object.assign(task, this.taskOld);
-      task.edit = false;
-    },
-    deleteTask(task) {
-      this.taskList.splice(this.taskList.indexOf(task), 1);
-    },
-  },
-  computed: {
-    tasks() {
-      var list = this.taskList;
-      const sorted = list.sort((n1, n2) => {
-        if (n1.dateCompleted < n2.dateCompleted) {
-          return -1;
-        }
-        if (n1.dateCompleted == n2.dateCompleted) {
-          return 0;
-        }
-        if (n1.dateCompleted > n2.dateCompleted) {
-          return 1;
-        }
-      });
-      return sorted;
-    },
-  },
-  created() {
-    this.getTasks();
-  },
-};
-</script>
-
-<style>
-li {
-  cursor: default;
-}
-</style>
+<script src="./TaskList.js"></script>

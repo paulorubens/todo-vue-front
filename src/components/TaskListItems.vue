@@ -48,3 +48,9 @@ export default {
   }
 };
 </script>
+
+<style>
+li {
+  cursor: default;
+}
+</style>

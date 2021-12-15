@@ -14,7 +14,6 @@ export default {
   },
   data() {
     return {
-      maxId: 3,
       task: "",
       taskOld: {},
       taskList: [],
@@ -30,18 +29,17 @@ export default {
         this.taskList = lista;
       }
     },
-    addTask(task) {
+    async addTask(task) {
       if (!task) {
         return;
       }
-      this.maxId++;
       var t1 = {
-        id: this.maxId,
         description: task,
         dateCreated: new Date(),
         dateCompleted: null,
         completed: false,
       };
+      t1 = await TaskService.createTask(t1);
       this.taskList.unshift(t1);
       this.task = "";
     },
@@ -82,7 +80,6 @@ export default {
       });
     },
     cancelarEdicaoTask(task) {
-      console.log('cancel');
       task = Object.assign(task, this.taskOld);
       task.edit = false;
     },
@@ -117,7 +114,7 @@ export default {
               timer: 3000,
               timerProgressBar: true,
             });
-            // this.listAllEmployees();
+            
             if (result.affected == 1)
               this.taskList.splice(this.taskList.indexOf(task), 1);
           });

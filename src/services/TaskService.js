@@ -6,7 +6,6 @@ export default {
       const response = await Api().get('/tasks');
       return response.data;
   } catch (error) {
-      console.log('erro');
       return console.log(error);
     }
   },
@@ -15,7 +14,6 @@ export default {
       const response = await Api().post('/tasks', task);
       return response.data;
     } catch (error) {
-      console.log('erro');
       return console.log(error);
     }
   },
@@ -24,7 +22,6 @@ export default {
       const response = await Api().patch(`/tasks/${task.id}`, task);
       return response.data;
     } catch (error) {
-      console.log('erro');
       return console.log(error);
     }
   },
@@ -33,7 +30,6 @@ export default {
       const response = await Api().delete(`/tasks/${id}`);
       return response.data;
   } catch (error) {
-      console.log('erro');
       return console.log(error);
     }
   },

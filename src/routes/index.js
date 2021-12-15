@@ -10,7 +10,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory('http://172.18.0.3:3000/api'),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 

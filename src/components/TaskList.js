@@ -1,20 +1,20 @@
 import TaskService from '../services/TaskService';
-import TaskListItems from "./TaskListItems.vue";
+import TaskListItems from './TaskListItems.vue';
 
 export default {
-  name: "TaskList",
+  name: 'TaskList',
   props: {
     title: {
       type: String,
-      default: 'Tarefas'
-    }
+      default: 'Tarefas',
+    },
   },
   components: {
     TaskListItems,
   },
   data() {
     return {
-      task: "",
+      task: '',
       taskOld: {},
       taskList: [],
     };
@@ -41,7 +41,7 @@ export default {
       };
       t1 = await TaskService.createTask(t1);
       this.taskList.unshift(t1);
-      this.task = "";
+      this.task = '';
     },
     completeTask(task) {
       task.dateCompleted = new Date();
@@ -57,10 +57,10 @@ export default {
     },
     updateTask(task) {
       delete task.edit;
-      TaskService.updateTask(task).then((result) => {
+      TaskService.updateTask(task).then((response) => {
         var message = '';
         var icon = '';
-        if (result.affected == 1) {
+        if (response.status === 200) {
           message = 'Updated successfully!';
           icon = 'success';
         } else {
@@ -96,15 +96,15 @@ export default {
         if (result.isConfirmed) {
           var message = '';
           var icon = '';
-          TaskService.deleteTask(task.id).then((result) => {
-            if (result.affected == 1) {
+          TaskService.deleteTask(task.id).then((response) => {
+            if (response.status === 204) {
               message = 'Deleted successfully!';
               icon = 'success';
             } else {
               message = 'Something wrong!';
               icon = 'error';
             }
-  
+
             this.$swal({
               title: message,
               icon: icon,
@@ -114,8 +114,8 @@ export default {
               timer: 3000,
               timerProgressBar: true,
             });
-            
-            if (result.affected == 1)
+
+            if (response.status === 204)
               this.taskList.splice(this.taskList.indexOf(task), 1);
           });
         }
@@ -128,10 +128,10 @@ export default {
       const sorted = list.sort((n1, n2) => {
         if (n1.dateCompleted == n2.dateCompleted) {
           return 0;
-        } else if (n1.dateCompleted == null) { 
-          return -1
-        } else if (n2.dateCompleted == null) { 
-          return 1
+        } else if (n1.dateCompleted == null) {
+          return -1;
+        } else if (n2.dateCompleted == null) {
+          return 1;
         } else if (n1.dateCompleted < n2.dateCompleted) {
           return 1;
         } else if (n1.dateCompleted > n2.dateCompleted) {

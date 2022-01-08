@@ -5,7 +5,7 @@ export default {
     try {
       const response = await Api().get('/tasks');
       return response.data;
-  } catch (error) {
+    } catch (error) {
       return console.log(error);
     }
   },
@@ -20,7 +20,7 @@ export default {
   async updateTask(task) {
     try {
       const response = await Api().patch(`/tasks/${task.id}`, task);
-      return response.data;
+      return response;
     } catch (error) {
       return console.log(error);
     }
@@ -28,8 +28,8 @@ export default {
   async deleteTask(id) {
     try {
       const response = await Api().delete(`/tasks/${id}`);
-      return response.data;
-  } catch (error) {
+      return response;
+    } catch (error) {
       return console.log(error);
     }
   },
